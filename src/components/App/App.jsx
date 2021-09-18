@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import { Searchbar } from "components/Searchbar";
+import { ImageGallery } from "components/ImageGallery";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { fetchImages } from "service/ApiService";
+
+import { Container } from "./App.styled";
+
+export class App extends Component {
+  state = {
+    imageName: '',
+    images: [],
+    page: 1,
+    isLoading: false,
+  }
+
+  handleFormSubmit = imageName => {
+    this.setState({ imageName, images: [], page: 1 });
+  }
+
+  fetchImages = () => {
+    const { imageName, page } = this.state;
+
+    if (imageName !== undefined) {
+      this.setState({ isLoading: true });
+
+      fetchImages(imageName, page)
+        .then(data =>
+          this.setState(prevState =>
+            ({ images: [...prevState.images, ...data.hits] })
+          )
+        )
+        .catch(error => console.log(error.message))
+        .finally(this.setState({ isLoading: false }));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.imageName !== this.state.imageName || prevState.page !== this.state.page) {
+      this.fetchImages();
+    }
+  }
+
+  render() {
+    const { images } = this.state;
+
+    return (
+      <Container>
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGallery images={images} />
+      </Container>
+    )
+  }
 }
-
-export default App;

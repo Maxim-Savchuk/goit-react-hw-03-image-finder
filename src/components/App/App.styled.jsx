@@ -1,9 +1,8 @@
-import { Component } from "react";
+import styled from "@emotion/styled";
 
-export class App extends Component {
-    render() {
-        return (
-            <div>Hello...</div>
-        )
-    }
-}
+export const Container = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+    padding-bottom: 24px;
+`;
