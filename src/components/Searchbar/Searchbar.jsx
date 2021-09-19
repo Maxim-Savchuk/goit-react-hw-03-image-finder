@@ -1,4 +1,6 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import {
     SearchbarContainer,
@@ -9,6 +11,10 @@ import {
 } from "./Searchbar.styled";
 
 export class Searchbar extends Component {
+    static propTypes = {
+        onSubmit: PropTypes.func,
+    }
+
     state = {
         imageName: '',
     }
@@ -23,7 +29,7 @@ export class Searchbar extends Component {
         const { imageName } = this.state;
 
         if (imageName.trim() === '') {
-            alert('Enter the image name pls')
+            toast.error('Please enter the image name.')
             return;
         }
 

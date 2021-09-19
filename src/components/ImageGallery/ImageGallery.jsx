@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from "components/ImageGalleryItem";
 
 import { ImageGalleryList } from "./ImageGallery.styled";
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images, onSelect }) => {
     return (
         <ImageGalleryList>
             {images &&
@@ -12,10 +13,15 @@ export const ImageGallery = ({ images }) => {
                             key={id}
                             webformatURL={webformatURL}
                             alt={tags}
+                            onSelect={() => onSelect(largeImageURL, tags)}
                         />
                     )
                 })}
         </ImageGalleryList>
     )
+}
 
+ImageGallery.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.object),
+    onSelect: PropTypes.func,
 }
