@@ -29,11 +29,11 @@ export class App extends Component {
     const { imageName, page } = this.state;
 
     if (prevImageName !== imageName || prevPage !== page) {
-      this.fetchImages();
+      this.fetchSearchingImages();
     }
   }
 
-  fetchImages = () => {
+  fetchSearchingImages = () => {
     const { imageName, page } = this.state;
 
     if (imageName !== undefined) {

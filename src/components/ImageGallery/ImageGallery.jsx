@@ -8,12 +8,13 @@ export const ImageGallery = ({ images, onSelect }) => {
         <ImageGalleryList>
             {images &&
                 images.map(({ id, webformatURL, largeImageURL, tags }) => {
+                    const selectImage = () => onSelect(largeImageURL, tags);
                     return (
                         <ImageGalleryItem
                             key={id}
                             webformatURL={webformatURL}
                             alt={tags}
-                            onSelect={() => onSelect(largeImageURL, tags)}
+                            onSelect={selectImage}
                         />
                     )
                 })}
